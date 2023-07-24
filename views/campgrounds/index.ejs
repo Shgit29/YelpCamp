@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campgrounds</title>
+</head>
+
+<body>
+    <!-- index route showing all campgrounds -->
+
+    <h1>All Campgrounds</h1>
+    <ul>
+
+        <% for(let c of camps){ %>
+
+            <li>
+                <a href="/campgrounds/<%=c._id %>">
+                    <%=c.title%>
+                </a>
+            </li>
+            <% } %>
+
+    </ul>
+
+    <footer><a href="campgrounds/new"> Add a new campground</a></footer>
+
+</body>
+
+</html>
