@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 const { descriptors, places } = require("./seedhelpers");
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/yelp-camp")
+  .connect(
+    "mongodb://127.0.0.1:27017/yelp-camp",
+    { useNewUrlParser: true },
+    { useUnifiedTopology: true }
+  )
   .then(() => {
     console.log("mongo connection working");
   })

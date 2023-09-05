@@ -26,16 +26,12 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 const validateCampground = (req, res, next) => {
-  try {
-    const { error } = campgroundSchema.validate(req.body);
-    if (error) {
-      const msg = error.details.map((el) => el.message).join(",");
-      throw new ExpressError(msg, 400);
-    } else {
-      next();
-    }
-  } catch {
-    throw new ExpressError(" validateCampground function not working");
+  const { error } = campgroundSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
   }
 };
 
