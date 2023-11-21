@@ -11,11 +11,11 @@ const catchAsync = require("../utils/catchAsync");
 
 router.post(
   "/",
-
+  
   isLoggedIn,
   validateReview,
   catchAsync(async (req, res) => {
-    const Campground = await campground.findByIdAndUpdate(req.params.id);
+    const Campground = await campground.findById(req.params.id);
     const review = new Review(req.body.review);
     review.author = req.user._id;
     Campground.reviews.push(review);

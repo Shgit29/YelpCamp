@@ -43,6 +43,7 @@ router.post(
     req.flash("success", "Welcome back to yelpcamp");
     const redirectUrl = res.locals.returnTo || "/campgrounds";
     delete req.session.returnTo;
+    console.log(redirectUrl);
     res.redirect(redirectUrl);
   }
 );

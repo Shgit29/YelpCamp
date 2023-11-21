@@ -1,39 +1,24 @@
 const express = require("express");
 const campground = require("../models/campgrounds");
 const catchAsync = require("../utils/catchAsync");
+const campgrounds = require("../controllers/campgrounds");
 
 const router = express.Router();
 
 const { isLoggedIn, validateCampground, isAuthor } = require("../middleware");
 
 // index route for showing the campgrounds
-router.get(
-  "/",
-
-  catchAsync(async (req, res) => {
-    const camps = await campground.find({});
-    res.render("campgrounds/index", { camps });
-  })
-);
+router.get("/", catchAsync(campgrounds.index));
 
 //view the form
-router.get("/new", isLoggedIn, (req, res) => {
-  res.render("campgrounds/new");
-});
+router.get("/new", isLoggedIn, campgrounds.renderNewForm);
 
 //for submitting the form
 router.post(
   "/",
   isLoggedIn,
   validateCampground,
-  catchAsync(async (req, res) => {
-    const Campground = new campground(req.body.campground);
-
-    Campground.author = req.user._id;
-    await Campground.save();
-    req.flash("success", "successfully made a new campground");
-    res.redirect(`/campgrounds/${Campground._id}`);
-  })
+  catchAsync(campgrounds.createNewCampground)
 );
 
 //show the details of all the campgroundss
