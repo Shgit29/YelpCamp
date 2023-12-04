@@ -1,5 +1,6 @@
 const User = require("../models/users");
 const passport = require("passport");
+const { storeReturnTo } = require("../middleware");
 
 module.exports.renderRegister = (req, res) => {
   res.render("users/register");
@@ -25,12 +26,13 @@ module.exports.renderLogin = (req, res) => {
   res.render("users/login");
 };
 
-(module.exports.loginUser = passport.authenticate("local", {
+module.exports.loginUser = passport.authenticate("local", {
   failureFlash: true,
   failureRedirect: "/login",
-})),
+}),
   (req, res) => {
     req.flash("success", "Welcome back to yelpcamp");
+    console.log(res.locals.returnTo);
     const redirectUrl = res.locals.returnTo || "/campgrounds";
     delete req.session.returnTo;
     console.log(redirectUrl);
