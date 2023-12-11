@@ -1,3 +1,9 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+// console.log(process.env.CLOUDINARY_CLOUD_NAME);
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -56,8 +62,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use((req, res, next) => {
-  
-  res.locals.currentUser = req.user;// this is provided by passport.js
+  res.locals.currentUser = req.user; // this is provided by passport.js
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
