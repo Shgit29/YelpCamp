@@ -1,10 +1,21 @@
+// https://res.cloudinary.com/deohtndpz/image/upload/w_300/v1701862433/YelpCamp/javiysggbaim3qbablvi.jpg
+
 const mongoose = require("mongoose");
 const Review = require("./review");
 const Schema = mongoose.Schema;
 
+const imageSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
+imageSchema.virtual("thumbnail").get(function () {
+  return this.url.replace("/upload", "/upload/w_200");
+});
+
 const campGroundSchema = new Schema({
   title: String,
-  image: String,
+  images: [imageSchema],
   price: Number,
   description: String,
   location: String,
