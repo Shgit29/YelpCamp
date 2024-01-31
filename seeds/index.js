@@ -40,21 +40,19 @@ const seedDB = async () => {
       description:
         "lorem ipsum dolor sit amet conefnasdnfsadiuahsndfiujahndionsa nisjdoaisdj  ijasdoijas  oiajsdoiasjd oijasoidj asdij oaisjd  oijas dfioj",
       price,
+      geometry: { type: "Point", coordinates: [13.393104, 52.527558] },
       images: [
         {
           url: "https://res.cloudinary.com/deohtndpz/image/upload/v1701861380/YelpCamp/vt0kkp1ihomrosslayxi.webp",
           filename: "YelpCamp/vt0kkp1ihomrosslayxi",
-          
         },
         {
           url: "https://res.cloudinary.com/deohtndpz/image/upload/v1701861380/YelpCamp/ozxjatjogbsn3mgqcgc8.jpg",
           filename: "YelpCamp/ozxjatjogbsn3mgqcgc8",
-          
         },
         {
           url: "https://res.cloudinary.com/deohtndpz/image/upload/v1701861380/YelpCamp/wwcernqfw9jwbmjndzkk.jpg",
           filename: "YelpCamp/wwcernqfw9jwbmjndzkk",
-          
         },
       ],
     });
