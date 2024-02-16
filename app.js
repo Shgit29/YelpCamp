@@ -18,19 +18,36 @@ const localpassport = require("passport-local");
 const User = require("./models/users");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
+const dbUrl = "mongodb://127.0.0.1:27017/yelp-camp";
+
+const MongoStore = require("connect-mongo");
+
+//using mongo for session store
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: "thisshouldbeabettersecret!",
+  },
+});
 
 //routes
 const userRoutes = require("./routes/users");
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
-const { storeReturnTo } = require("./middleware");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
+store.on("error", function (err) {
+  console.log("session store error", err);
+});
+
+//session configuration
 const sessionConfig = {
+  store: store,
   name: "session",
   secret: "bettersecret",
   resave: false,
@@ -98,10 +115,12 @@ passport.use(new localpassport(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+
 app.engine("ejs", ejsMate);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/yelp-camp", {})
+  .connect(dbUrl, {})
 
   .then(() => {
     console.log("mongo connection working");
