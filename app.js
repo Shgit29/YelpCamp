@@ -16,7 +16,7 @@ const localpassport = require("passport-local");
 const User = require("./models/users");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
-const dbUrl = "mongodb://127.0.0.1:27017/yelp-camp";
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 const secret = process.env.SECRET || "thishsouldbeabettersecret";
 
 const MongoStore = require("connect-mongo");
