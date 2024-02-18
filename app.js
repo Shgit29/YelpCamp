@@ -2,8 +2,6 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-// console.log(process.env.CLOUDINARY_CLOUD_NAME);
-
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -18,7 +16,8 @@ const localpassport = require("passport-local");
 const User = require("./models/users");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
-const dbUrl = "mongodb://127.0.0.1:27017/yelp-camp";
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
+const secret = process.env.SECRET || "thishsouldbeabettersecret";
 
 const MongoStore = require("connect-mongo");
 
@@ -27,7 +26,7 @@ const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-    secret: "thisshouldbeabettersecret!",
+    secret: secret,
   },
 });
 
@@ -49,7 +48,7 @@ store.on("error", function (err) {
 const sessionConfig = {
   store: store,
   name: "session",
-  secret: "bettersecret",
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -114,8 +113,6 @@ passport.use(new localpassport(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-
 
 app.engine("ejs", ejsMate);
 
