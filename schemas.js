@@ -1,7 +1,5 @@
 const BaseJoi = require("joi");
-const { JSDOM } = require("jsdom");
-const { window } = new JSDOM("");
-const DOMPurify = require("dompurify")(window);
+const sanitizeHtml = require("sanitize-html");
 
 const extension = (joi) => ({
   type: "string",
@@ -12,10 +10,12 @@ const extension = (joi) => ({
   rules: {
     escapeHTML: {
       validate(value, helpers) {
-        const clean = DOMPurify.sanitize(value);
-        if (clean !== value) {
+        const clean = sanitizeHtml(value, {
+          allowedTags: [],
+          allowedAttributes: {},
+        });
+        if (clean !== value)
           return helpers.error("string.escapeHTML", { value });
-        }
         return clean;
       },
     },
@@ -40,3 +40,4 @@ module.exports.reviewSchema = Joi.object({
     body: Joi.string().required().escapeHTML(),
   }).required(),
 });
+
