@@ -4,7 +4,8 @@
   "description": "My first project",
   "main": "app.js",
   "scripts": {
-"start": "npm start",
+    "postinstall": "npm run build",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
