@@ -18,6 +18,7 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 const secret = process.env.SECRET || "thishsouldbeabettersecret";
+const PORT = process.env.PORT || 3000;
 
 const MongoStore = require("connect-mongo");
 
@@ -159,6 +160,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`app is running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
 });
