@@ -35,5 +35,8 @@
     "postcss": "^8.4.35",
     "postcss-sanitize": "^0.0.9",
     "sanitize-html": "^2.11.0"
+  },
+ "engines": {
+    "node": ">=14.0.0 <15.0.0"
   }
 }
